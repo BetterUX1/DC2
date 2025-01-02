@@ -1,0 +1,12 @@
+# Docker compose file for the site
+
+services:
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - '3000:3000'
+    volumes:
+      - ./gateway:/usr/src/app
+    environment:
+      - NODE_ENV=development
