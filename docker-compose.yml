@@ -8,5 +8,29 @@ services:
       - '3000:3000'
     volumes:
       - ./gateway:/usr/src/app
-    environment:
-      - NODE_ENV=development
+
+  backend-auth:
+    build: ./backend-auth
+    container_name: backend-auth
+    ports:
+      - '4000:4000'
+    volumes:
+      - ./backend-auth:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file:
+      - ./backend-auth/.env
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    container_name: mongo
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongo-data:/data:/data/db
+    env_file:
+      - ./mongo/.env
+
+volumes:
+  mongo-data:
